@@ -1,6 +1,7 @@
 #ifndef __MATRIX__
 #define __MATRIX__
 #include <iostream>
+#include <fstream>
 
 class Matrix {
 
@@ -24,10 +25,17 @@ public:
     int getRow();
     int getColumn();
     int getElement(const int& indexOne, const int& indexTwo);
+
+public:
+    void writeMatrixToFile(const std::string& fileName);
+    void fillMatrixFromFile(const std::string& fileName);
+
 private:
     int** _matrix = nullptr;
     unsigned int _row = 0;
     unsigned int _column = 0;
+    std::ifstream fileRead;
+    std::ofstream fileWrite;
 };
 
 #endif // __MATRIX__

@@ -1,10 +1,15 @@
 #include "Matrix.hpp"
-#include "FileOperations.hpp"
+
 
 int main() {
-    Matrix obj(3,3);
+    Matrix obj(3, 4);
     obj.fillMatrix();
 
-    FileOperation file("matrixOne.txt");
-    file.writeMatrixToFile(&obj);
+    obj.writeMatrixToFile("matrixOne.txt");
+
+    Matrix obj2(3, 4);
+    obj2.fillMatrixFromFile("matrixOne.txt");
+    obj2.printMatrix();
+
+    return 0;
 }

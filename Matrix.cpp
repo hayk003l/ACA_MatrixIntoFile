@@ -1,7 +1,6 @@
 #include "Matrix.hpp"
     
 Matrix::Matrix(const int& row, const int& column) : _row(row), _column(column) {          
-    std::cout << "ctor" << std::endl;
     _matrix = new int*[_row];
 
     for (int i = 0; i < _row; ++i) {
@@ -9,7 +8,7 @@ Matrix::Matrix(const int& row, const int& column) : _row(row), _column(column) {
     }
 }                       // parametrize constructor
 
-Matrix::Matrix() {std::cout << "def ctor" << std::endl;};                      // default constructor
+Matrix::Matrix() {};                      // default constructor
 
 Matrix::~Matrix() {                      // destructor
 
@@ -22,7 +21,6 @@ Matrix::~Matrix() {                      // destructor
 }
 
 Matrix::Matrix (const Matrix& obj) {             // copy constructor
-    std::cout << "copy ctor" << std::endl;
     this->_row = obj._row;
     this->_column = obj._column;
     _matrix = new int*[_row];
@@ -76,7 +74,6 @@ Matrix& Matrix::operator=(const Matrix& obj) {   // operator assignment
 }
 
 Matrix::Matrix(Matrix&& obj) : _row(obj._row), _column(obj._column) {
-    std::cout << "move ctor" << std::endl;
     _matrix = obj._matrix;
     obj._matrix = nullptr;
     obj._row = 0;
@@ -84,7 +81,6 @@ Matrix::Matrix(Matrix&& obj) : _row(obj._row), _column(obj._column) {
 }
 
 Matrix& Matrix::operator=(Matrix&& obj){
-    std::cout << "move assignment" << std::endl;
     if(this != &obj) {
         _row = obj._row;
         _column = obj._column;
@@ -191,3 +187,31 @@ int Matrix::getElement(const int& indexOne, const int& indexTwo) {
     return _matrix[indexOne][indexTwo];
 }
 
+void Matrix::writeMatrixToFile(const std::string& fileName) { 
+    fileWrite.open(fileName);
+    if(!fileWrite.is_open()) {
+        std::cout << "Error. File wasn't open." << std::endl;
+    }
+    else {
+        for (int i = 0; i < _row; ++i) {
+            for (int j = 0; j < _column; ++j) {
+                fileWrite << " " << _matrix[i][j];
+            }
+            fileWrite << std::endl;
+        }
+    }
+}
+
+void Matrix::fillMatrixFromFile(const std::string& fileName) {
+    fileRead.open(fileName);
+    if(!fileRead.is_open()) {
+        std::cout << "Error. File wasn't open." << std::endl;
+    }
+    else {
+        for (int i = 0; i < _row; ++i) {
+            for (int j = 0; j < _column; ++j) {
+                fileRead >> _matrix[i][j];
+            }
+        }
+    }
+}
